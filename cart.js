@@ -1,18 +1,20 @@
 const cartItems = getCartItemsFromStorage() || [];
 
-function addToCart(product, quantity) {
-    const existingCartItem = cartItems.find((item) => item.product.id === product.id);
+function addToCart(product, ...quantities) {
+    quantities.forEach((quantity) => {
+        const existingCartItem = cartItems.find((item) => item.product.id === product.id);
 
-    if (existingCartItem) {
-        existingCartItem.quantity += quantity;
-    } else {
-        const cartItem = {
-            product,
-            quantity,
-        };
+        if (existingCartItem) {
+            existingCartItem.quantity += quantity;
+        } else {
+            const cartItem = {
+                product,
+                quantity,
+            };
 
-        cartItems.push(cartItem);
-    }
+            cartItems.push(cartItem);
+        }
+    });
 
     saveCartItemsToStorage();
 }
